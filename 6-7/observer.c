@@ -9,7 +9,7 @@
 #define PORT 8080
 
 void display_system_status(const char *status) {
-    printf("Observer: %s\n", status);
+    printf("Наблюдатель: %s\n", status);
 }
 
 int main() {
@@ -17,7 +17,7 @@ int main() {
     struct sockaddr_in server_address;
 
     if ((observer_socket = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-        perror("Socket creation failed");
+        perror("Сокет не создан");
         exit(EXIT_FAILURE);
     }
 
@@ -25,12 +25,12 @@ int main() {
     server_address.sin_port = htons(PORT);
 
     if (inet_pton(AF_INET, SERVER_IP, &(server_address.sin_addr)) <= 0) {
-        perror("Invalid address/ Address not supported");
+        perror("Неверный адрес");
         exit(EXIT_FAILURE);
     }
 
     if (connect(observer_socket, (struct sockaddr *)&server_address, sizeof(server_address)) < 0) {
-        perror("Connection failed");
+        perror("Соединение не установлено");
         exit(EXIT_FAILURE);
     }
 
@@ -40,7 +40,7 @@ int main() {
 
         // Получение информации от сервера
         if (recv(observer_socket, status_message, sizeof(status_message), 0) <= 0) {
-            perror("Receive failed");
+            perror("Получение информации от сервера провалено");
             exit(EXIT_FAILURE);
         }
 
