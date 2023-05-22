@@ -17,7 +17,7 @@ int main() {
     int addrlen = sizeof(address);
 
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
-        perror("Socket creation failed");
+        perror("Создание сокета не произошло");
         exit(EXIT_FAILURE);
     }
 
@@ -35,18 +35,18 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    update_system_status("Server is running");
+    update_system_status("Сервер запущен");
 
     if ((observer_socket = accept(server_fd, (struct sockaddr *)&observer_address, (socklen_t*)&addrlen)) < 0) {
-        perror("Observer accept failed");
+        perror("Наблюдатель не смог подключиться");
         exit(EXIT_FAILURE);
     }
 
-    update_system_status("Observer connected");
+    update_system_status("Надлюдатель подключен");
 
     while (1) {
         if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen)) < 0) {
-            perror("Accept failed");
+            perror("Ошибка подключения");
             exit(EXIT_FAILURE);
         }
 
@@ -66,7 +66,7 @@ int main() {
 
         // Отправка информации наблюдателю
         char status_message[100];
-        snprintf(status_message, sizeof(status_message), "New client connected: %d", new_socket);
+        snprintf(status_message, sizeof(status_message), "Клиент подключен: %d", new_socket);
         send(observer_socket, status_message, strlen(status_message), 0);
 
         close(new_socket);
