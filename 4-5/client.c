@@ -34,7 +34,12 @@ int main() {
     printf("Подключение рабочего к серверу установлено\n");
 
     // Отправка данных серверу
-    const char *message = "Привет, сервер!";
+    int r = rand() % 2;
+    if (r == 0) {
+        const char *message = "Булавка кривая";
+    } else {
+        const char *message = "Булавка прямая";
+    }
     write(client_socket, message, strlen(message));
 
     // Чтение данных от сервера
