@@ -35,7 +35,12 @@ int main() {
     update_system_status("Подключение к серверу успешно");
 
 // Обработка запросов к серверу
-   const char *message = "Привет, сервер!";
+   int r = rand() % 2;
+    if (r == 0) {
+        const char *message = "Булавка кривая";
+    } else {
+        const char *message = "Булавка прямая";
+    }
     write(client_socket, message, strlen(message));
 
     // Чтение данных от сервера
