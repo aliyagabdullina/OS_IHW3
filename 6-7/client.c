@@ -24,15 +24,15 @@ int main() {
     server_address.sin_port = htons(PORT);
 
     if (inet_pton(AF_INET, SERVER_IP, &(server_address.sin_addr)) <= 0) {
-        perror("Invalid address/ Address not supported");
+        perror("Неверный адрес");
         exit(EXIT_FAILURE);
     }
 
     if(connect(client_socket, (struct sockaddr *)&server_address, sizeof(server_address)) < 0) {
-perror("Connection failed");
-exit(EXIT_FAILURE);
-}
-  update_system_status("Connected to the server");
+        perror("Соединение не установлено");
+        exit(EXIT_FAILURE);
+    }
+    update_system_status("Подключение к серверу успешно");
 
 // Обработка запросов к серверу
    const char *message = "Привет, сервер!";
